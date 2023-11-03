@@ -180,7 +180,15 @@ bool ValueTreeSynchroniser::applyChange (ValueTree& root, const void* data, size
         case ValueTreeSynchroniserHelpers::propertyChanged:
         {
             Identifier property (input.readString());
-            v.setProperty (property, var::readFromStream (input), undoManager);
+            
+            var fromStream = var::readFromStream (input);
+
+            bool sendChangeMessage = v.getProperty (property) == fromStream;
+            v.setProperty (property, fromStream, undoManager);
+
+            if (sendChangeMessage)
+                v.sendPropertyChangeMessage(property);
+            
             return true;
         }
 
