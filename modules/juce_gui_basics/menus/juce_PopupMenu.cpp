@@ -1296,14 +1296,11 @@ struct MenuWindow  : public Component
 
     LookAndFeel* findLookAndFeel (const PopupMenu& menu, MenuWindow* parentWindow) const
     {
-        if (auto target = options.getTargetComponent())
-            return &target->getLookAndFeel ();
-        
-        if (parentWindow != nullptr)
-            return &(parentWindow->getLookAndFeel());
-
         if (auto* lnf = menu.lookAndFeel.get())
             return lnf;
+
+        if (parentWindow != nullptr)
+            return &(parentWindow->getLookAndFeel());
 
         return &getLookAndFeel();
     }
@@ -2124,10 +2121,10 @@ int PopupMenu::showWithOptionalCallback (const Options& options,
 
     if (! lookAndFeel.get())
     {
-        if (auto parent = options.getParentComponent ())
-            setLookAndFeel (&parent->getLookAndFeel ());
-        else if (auto target = options.getTargetComponent ())
+        if (auto target = options.getTargetComponent ())
             setLookAndFeel (&target->getLookAndFeel ());
+        else if (auto parent = options.getParentComponent ())
+            setLookAndFeel (&parent->getLookAndFeel ());
     }
     
     if (auto* window = createWindow (options, &(callback->managerOfChosenCommand)))
