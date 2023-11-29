@@ -1296,6 +1296,9 @@ struct MenuWindow  : public Component
 
     LookAndFeel* findLookAndFeel (const PopupMenu& menu, MenuWindow* parentWindow) const
     {
+        if (auto target = options.getTargetComponent())
+            return &target->getLookAndFeel ();
+        
         if (parentWindow != nullptr)
             return &(parentWindow->getLookAndFeel());
 
