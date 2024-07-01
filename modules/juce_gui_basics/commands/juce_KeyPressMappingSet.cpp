@@ -79,10 +79,10 @@ void KeyPressMappingSet::addKeyPress (const CommandID commandID, const KeyPress&
             {
                 CommandMapping* const cm = new CommandMapping();
                 cm->commandID = commandID;
-                cm->keypresses.add (newKeyPress);
+                cm->keypresses.insert (insertIndex, newKeyPress);
                 cm->wantsKeyUpDownCallbacks = (ci->flags & ApplicationCommandInfo::wantsKeyUpDownCallbacks) != 0;
 
-                mappings.add (cm);
+                mappings.insert (insertIndex, cm);
                 sendChangeMessage();
             }
             else
@@ -98,7 +98,7 @@ void KeyPressMappingSet::addKeyPress (const CommandID commandID, const KeyPress&
 static void addKeyPresses (KeyPressMappingSet& set, const ApplicationCommandInfo* const ci)
 {
     for (int j = 0; j < ci->defaultKeypresses.size(); ++j)
-        set.addKeyPress (ci->commandID, ci->defaultKeypresses.getReference (j));
+        set.addKeyPress (ci->commandID, ci->defaultKeypresses.getReference (j), 0);
 }
 
 void KeyPressMappingSet::resetToDefaultMappings()

@@ -71,7 +71,7 @@ void ApplicationCommandManager::registerCommand (const ApplicationCommandInfo& n
     {
         auto* newInfo = new ApplicationCommandInfo (newCommand);
         newInfo->flags &= ~ApplicationCommandInfo::isTicked;
-        commands.add (newInfo);
+        commands.insert (0, newInfo);
 
         keyMappings->resetToDefaultMapping (newCommand.commandID);
 
@@ -108,7 +108,7 @@ void ApplicationCommandManager::removeCommand (const CommandID commandID)
             const Array<KeyPress> keys (keyMappings->getKeyPressesAssignedToCommand (commandID));
 
             for (int j = keys.size(); --j >= 0;)
-                keyMappings->removeKeyPress (keys.getReference (j));
+                keyMappings->removeKeyPress (commandID, j);
         }
     }
 }
