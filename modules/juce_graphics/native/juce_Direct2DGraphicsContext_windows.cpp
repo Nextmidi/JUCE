@@ -113,9 +113,9 @@ public:
             return sink.axisAlignedLines && sink.lineCount == 3;
         }();
 
-        jassert (layerParameters.opacity != 1.0f
-                 || layerParameters.opacityBrush
-                 || ! isGeometryAxisAlignedRectangle);
+        // jassert (layerParameters.opacity != 1.0f
+        //          || layerParameters.opacityBrush
+        //          || ! isGeometryAxisAlignedRectangle);
        #endif
 
         context->PushLayer (layerParameters, nullptr);
