@@ -562,7 +562,7 @@ bool Viewport::useMouseWheelMoveIfNeeded (const MouseEvent& e, const MouseWheelD
     if (! isParentOf (e.originalComponent))
         return false;
     
-    if (! (e.mods.isAltDown() || e.mods.isCtrlDown() || e.mods.isCommandDown()))
+    if (! (/* e.mods.isAltDown() ||*/ e.mods.isCtrlDown() || e.mods.isCommandDown()))
     {
         const bool canScrollVert = (allowScrollingWithoutScrollbarV || getVerticalScrollBar().isVisible());
         const bool canScrollHorz = (allowScrollingWithoutScrollbarH || getHorizontalScrollBar().isVisible());
