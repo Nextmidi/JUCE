@@ -532,11 +532,24 @@ void TabbedButtonBar::updateTabPositions (bool animate)
 
     behindFrontTab->setBounds (getLocalBounds());
 
-    if (frontTab != nullptr)
+    if (getBringActiveTabToFront ())
     {
-        frontTab->toFront (false);
-        behindFrontTab->toBehind (frontTab);
+        if (frontTab != nullptr)
+        {
+            frontTab->toFront (false);
+            behindFrontTab->toBehind (frontTab);
+        }
     }
+}
+
+bool TabbedButtonBar::getBringActiveTabToFront() const
+{
+    return bringActiveTabToFront;
+}
+
+void TabbedButtonBar::setBringActiveTabToFront (bool shouldBringToFront)
+{
+    bringActiveTabToFront = shouldBringToFront;
 }
 
 //==============================================================================
