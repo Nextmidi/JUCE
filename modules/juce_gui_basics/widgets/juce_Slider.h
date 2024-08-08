@@ -888,10 +888,6 @@ public:
         rotarySliderFillColourId    = 0x1001311,  /**< For rotary sliders, this colour fills the outer curve. */
         rotarySliderOutlineColourId = 0x1001312,  /**< For rotary sliders, this colour is used to draw the outer curve's outline. */
         
-        linearFillColourId          = 0x1001320,  /**< Custom colour to fill linear sliders */
-        linearFillColourAId         = 0x1001321,  /**< Custom colour to fill sliders part to the first knob */
-        linearFillColourBId         = 0x1001322,  /**< Custom colour to fill sliders part between first and second knob */
-        linearFillColourCId          = 0x1001323,  /**< Custom colour to fill sliders from second knob on */
         linearOutlineColourId       = 0x1001324,  /**< Custom colour to outline linear sliders */
 
         textBoxTextColourId         = 0x1001400,  /**< The colour for the text in the text-editor box used for editing the value. */
