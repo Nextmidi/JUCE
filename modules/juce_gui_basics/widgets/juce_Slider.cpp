@@ -165,12 +165,12 @@ public:
         // keep the current values inside the new range..
         if (style != TwoValueHorizontal && style != TwoValueVertical)
         {
-            setValue (getValue(), dontSendNotification);
+            setValue (getValue(), sendNotification);
         }
         else
         {
-            setMinValue (getMinValue(), dontSendNotification, false);
-            setMaxValue (getMaxValue(), dontSendNotification, false);
+            setMinValue (getMinValue(), sendNotification, false);
+            setMaxValue (getMaxValue(), sendNotification, false);
         }
 
         updateText();

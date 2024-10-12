@@ -346,6 +346,9 @@ public:
     /** @internal */
     std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
 
+    /** custom behaviour */
+    bool getBringActiveTabToFront () const;
+    void setBringActiveTabToFront (bool bringToFront);
 protected:
     //==============================================================================
     /** This creates one of the tabs.
@@ -372,6 +375,8 @@ private:
     class BehindFrontTabComp;
     std::unique_ptr<BehindFrontTabComp> behindFrontTab;
     std::unique_ptr<Button> extraTabsButton;
+
+    bool bringActiveTabToFront{ true };
 
     void showExtraItemsMenu();
     void updateTabPositions (bool animate);

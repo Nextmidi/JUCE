@@ -68,11 +68,11 @@ void ApplicationCommandManager::registerCommand (const ApplicationCommandInfo& n
         // Trying to re-register the same command ID with different parameters can often indicate a typo.
         // This assertion is here because I've found it useful catching some mistakes, but it may also cause
         // false alarms if you're deliberately updating some flags for a command.
-        jassert (newCommand.shortName == getCommandForID (newCommand.commandID)->shortName
-                  && newCommand.categoryName == getCommandForID (newCommand.commandID)->categoryName
-                  && newCommand.defaultKeypresses == getCommandForID (newCommand.commandID)->defaultKeypresses
-                  && (newCommand.flags & (ApplicationCommandInfo::wantsKeyUpDownCallbacks | ApplicationCommandInfo::hiddenFromKeyEditor | ApplicationCommandInfo::readOnlyInKeyEditor))
-                       == (getCommandForID (newCommand.commandID)->flags & (ApplicationCommandInfo::wantsKeyUpDownCallbacks | ApplicationCommandInfo::hiddenFromKeyEditor | ApplicationCommandInfo::readOnlyInKeyEditor)));
+        // jassert (newCommand.shortName == getCommandForID (newCommand.commandID)->shortName
+        //           && newCommand.categoryName == getCommandForID (newCommand.commandID)->categoryName
+        //           && newCommand.defaultKeypresses == getCommandForID (newCommand.commandID)->defaultKeypresses
+        //           && (newCommand.flags & (ApplicationCommandInfo::wantsKeyUpDownCallbacks | ApplicationCommandInfo::hiddenFromKeyEditor | ApplicationCommandInfo::readOnlyInKeyEditor))
+        //                == (getCommandForID (newCommand.commandID)->flags & (ApplicationCommandInfo::wantsKeyUpDownCallbacks | ApplicationCommandInfo::hiddenFromKeyEditor | ApplicationCommandInfo::readOnlyInKeyEditor)));
 
         *command = newCommand;
     }
@@ -80,7 +80,7 @@ void ApplicationCommandManager::registerCommand (const ApplicationCommandInfo& n
     {
         auto* newInfo = new ApplicationCommandInfo (newCommand);
         newInfo->flags &= ~ApplicationCommandInfo::isTicked;
-        commands.add (newInfo);
+        commands.insert (0, newInfo);
 
         keyMappings->resetToDefaultMapping (newCommand.commandID);
 
@@ -117,7 +117,7 @@ void ApplicationCommandManager::removeCommand (const CommandID commandID)
             const Array<KeyPress> keys (keyMappings->getKeyPressesAssignedToCommand (commandID));
 
             for (int j = keys.size(); --j >= 0;)
-                keyMappings->removeKeyPress (keys.getReference (j));
+                keyMappings->removeKeyPress (commandID, j);
         }
     }
 }
