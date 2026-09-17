@@ -1042,8 +1042,8 @@ public:
         {
             const auto programValue = getProgramValueFromNormalised (v);
 
-            if (programValue != owner.getCurrentProgram())
-                owner.setCurrentProgram (programValue);
+            // Repeated program requests must retrigger the selected program.
+            owner.setCurrentProgram (programValue);
 
             if (! approximatelyEqual (valueNormalized, v))
             {
