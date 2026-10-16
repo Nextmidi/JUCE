@@ -167,7 +167,7 @@ private:
     
     static String createFlagString (int flags);
     
-    const static inline String FlagIdentifier{ "__flag_" };
+    static constexpr const char* FlagIdentifier = "__flag_";
 };
 
 } // namespace juce
