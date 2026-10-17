@@ -2053,6 +2053,7 @@ function(_juce_initialise_target target)
         APP_SANDBOX_INHERIT
         VST3_AUTO_MANIFEST
 
+        SHARED_CODE_LIBRARY_TYPE
         PLUGIN_NAME
         PLUGIN_MANUFACTURER_CODE
         PLUGIN_CODE
@@ -2232,7 +2233,23 @@ function(juce_add_gui_app target)
 endfunction()
 
 function(juce_add_plugin target)
-    add_library(${target} STATIC)
+    cmake_parse_arguments(JUCE_PLUGIN "" "SHARED_CODE_LIBRARY_TYPE" "" ${ARGN})
+
+    if("SHARED_CODE_LIBRARY_TYPE" IN_LIST JUCE_PLUGIN_KEYWORDS_MISSING_VALUES)
+        message(FATAL_ERROR "SHARED_CODE_LIBRARY_TYPE requires STATIC or OBJECT")
+    endif()
+
+    if(NOT DEFINED JUCE_PLUGIN_SHARED_CODE_LIBRARY_TYPE)
+        set(JUCE_PLUGIN_SHARED_CODE_LIBRARY_TYPE STATIC)
+    endif()
+
+    if(NOT JUCE_PLUGIN_SHARED_CODE_LIBRARY_TYPE MATCHES "^(STATIC|OBJECT)$")
+        message(FATAL_ERROR "SHARED_CODE_LIBRARY_TYPE must be STATIC or OBJECT")
+    endif()
+
+    # An object library avoids the COFF archive size limit for large plugins.
+    # Each wrapper still links the same objects and their usage requirements.
+    add_library(${target} ${JUCE_PLUGIN_SHARED_CODE_LIBRARY_TYPE})
     set_target_properties(${target} PROPERTIES JUCE_IS_PLUGIN TRUE)
     _juce_initialise_target(${target} ${ARGN})
     _juce_configure_plugin_targets(${target})

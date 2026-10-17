@@ -249,7 +249,7 @@ directory.
     juce_add_plugin(<target> [KEY value]...)
 
 `juce_add_gui_app` and `juce_add_console_app` add an executable target with name `<target>`.
-`juce_add_plugin` adds a 'shared code' static library target with name `<target>`, along with extra
+`juce_add_plugin` adds a 'shared code' library target (static by default) with name `<target>`, along with extra
 targets for each of the specified plugin formats. Each of these functions also takes a number of
 optional arguments in the form of a `KEY` followed by one or more `value`s which can be used to set
 additional attributes of the target. If these optional arguments aren't specified, their values will
@@ -501,6 +501,11 @@ attributes directly to these creation functions, rather than adding them later.
 
 `PLIST_TO_MERGE`
 - A string to insert into an app/plugin's Info.plist.
+
+`SHARED_CODE_LIBRARY_TYPE`
+- For plugin targets, selects `STATIC` (the default) or `OBJECT` for the shared-code library.
+  `OBJECT` links the compiled shared-code objects directly into each format wrapper, avoiding
+  intermediate static archive size limits. The shared code is still compiled once for all formats.
 
 `FORMATS`
 - For plugin targets, specifies the plugin targets to build. Should be provided as a space-separated
